@@ -6,7 +6,7 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
 		if(isset($_GET['id'])) {
-			$sql = $pdo->prepare("SELECT * FROM tipoCalzado WHERE id =:id");
+			$sql = $pdo->prepare("SELECT * FROM tipocalzado WHERE id =:id");
 			$sql->bindValue(':id', $_GET['id']);
 			$sql->execute();
 			$sql->setFetchMode(PDO::FETCH_ASSOC);
@@ -14,7 +14,7 @@
 			echo json_encode($sql->fetchAll());
 			exit;
 		} else {
-			$sql = $pdo->prepare("SELECT * FROM tipoCalzado");
+			$sql = $pdo->prepare("SELECT * FROM tipocalzado");
 			$sql->execute();
 			$sql->setFetchMode(PDO::FETCH_ASSOC);
 			header('HTTP/1.1 200 hay datos');
@@ -36,6 +36,17 @@
 			echo json_encode($idPost);
 			exit;
 		}
+	}
+
+	if($_SERVER['REQUEST_METHOD'] == 'PUT') {
+		$sql = "UPDATE tipocalzado SET tipoCalzado=:tipoCalzado WHERE id=:id";
+		$stmt = $pdo->prepare($sql);
+
+		$stmt->bindValue(':tipoCalzado', $_GET['tipoCalzado']);
+		$stmt->bindValue(':id', $_GET['id']);
+		$stmt->execute();
+		header('HTTP/1.1 200 Ok');
+		exit;
 	}
 
 ?>

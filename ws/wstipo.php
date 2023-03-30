@@ -49,4 +49,13 @@
 		exit;
 	}
 
+	if($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+		$sql = "DELETE FROM tipocalzado WHERE id=:id";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindValue(':id', $_GET['id']);
+		$stmt->execute();
+		header('HTTP/1.1 200 Ok');
+		exit;
+	}
+
 ?>
